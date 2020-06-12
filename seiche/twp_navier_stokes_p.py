@@ -46,12 +46,11 @@ coefficients = RANS2P.Coefficients(epsFact=epsFact_viscosity,
                                    movingDomain=movingDomain)
 
 
-wind_Amp=5.0
-wind_N=2.0
-wind_omega = 2.0
-T_length = 2
-#tank.BC['y+'].u_dirichlet.uOfXT = lambda x,t, n=np.zeros(3,):  wind_Amp*np.sin(np.pi*wind_N*x[0]/tank_length)*np.sin(2.0*np.pi*wind_omega/t_length*t)
-
+wind_Amp=0.01
+wavelength = L[0]*2.0
+#period = 2.0
+wave_num = 2*np.pi/wavelength
+wave_freq = np.sqrt(-g[1]*wave_num*wave_num*L[1])
 
 def getDBC_p(x,flag):
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
@@ -60,16 +59,16 @@ def getDBC_p(x,flag):
 def getDBC_u(x,flag):
     #return None
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
-        return lambda x,t: wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.sin(2.0*np.pi*wind_omega/T_length*t)
+        return lambda x,t: wind_Amp*2*np.sqrt(-g[1]/L[1])*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
         #return lambda x,t: wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.sin(2.0*np.pi*wind_omega/T*t)
     if flag in [boundaryTags['bottom'],boundaryTags['left'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
         return lambda x,t: 0.0 #reynold's number of 10
 
 
 def v_profile(x,t):
-    k = np.pi*wind_N/L[0]
-    A = k*L[1]*wind_Amp
-    return A*np.sin(np.pi*wind_N*x[0]/L[0])*np.cos(2.0*np.pi*wind_omega/T_length*t)
+    #k = np.pi*wind_N/L[0]
+    #A = k*L[1]*wind_Amp
+    return 2*wave_freq*wind_Amp*np.sin(wave_num*x[0])*np.cos(wave_freq*t)
 
 def getDBC_v(x,flag):
     if flag == boundaryTags['top']:
@@ -93,24 +92,28 @@ def getAFBC_p(x,flag):
         return lambda x,t: 0.0
 
 def getAFBC_u(x,flag):
-    return None
-    #if flag != boundaryTags['top'] or flag != boundaryTags['bottom'] :# or x[1] < L[1] - 1.0e-12:
-    #    return lambda x,t: 0.0
+    #return None
+    if flag not in [boundaryTags['top'],boundaryTags['bottom'],boundaryTags['right'],boundaryTags['left']]:
+        return lambda x,t: 0.0
 
 def getAFBC_v(x,flag):
-    return None
+    if flag not in [boundaryTags['top'],boundaryTags['bottom'],boundaryTags['right'],boundaryTags['left']]:
+        return lambda x,t: 0.0
+
     #if flag != boundaryTags['top'] or flag != boundaryTags['bottom']:# or x[1] < L[1] - 1.0e-12:
     #    return lambda x,t: 0.0
 
 def getDFBC_u(x,flag):
-    return None
+    if flag not in [boundaryTags['top'],boundaryTags['bottom'],boundaryTags['right'],boundaryTags['left']]:
+        return lambda x,t: 0.0
     #if flag == boundaryTags['top'] or flag == boundaryTags['bottom']:# or x[1] < L[1] - 1.0e-12:
     #    return None
     #else:
     #    return lambda x,t: 0.0
     
 def getDFBC_v(x,flag):
-    return None
+    if flag not in [boundaryTags['top'],boundaryTags['bottom'],boundaryTags['right'],boundaryTags['left']]:
+        return lambda x,t: 0.0
     #if flag == boundaryTags['top'] or flag == boundaryTags['bottom']:# or x[1] < L[1] - 1.0e-12:
     #    return None
     #else:
