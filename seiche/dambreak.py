@@ -6,7 +6,7 @@ from proteus.Profiling import logEvent
    
 #  Discretization -- input options  
 #Refinement = 20#45min on a single core for spaceOrder=1, useHex=False
-Refinement = 30#45min on a single core for spaceOrder=1, useHex=False
+Refinement = 40#45min on a single core for spaceOrder=1, useHex=False
 genMesh=True
 movingDomain=False
 applyRedistancing=True
@@ -39,7 +39,7 @@ if spaceOrder == 1:
     
 # Domain and mesh
 #L = (0.584,0.350)
-L = (1.0,1.0)
+L = (2.0,0.5)
 he = L[0]/float(4*Refinement-1)
 #he*=0.5
 #he*=0.5
@@ -116,7 +116,7 @@ runCFL=0.5
 nDTout = int(round(T/dt_fixed))
 
 # Numerical parameters
-ns_forceStrongDirichlet = True
+ns_forceStrongDirichlet = False#True
 if useMetrics:
     ns_shockCapturingFactor  = 0.25
     ns_lag_shockCapturing = True
@@ -191,8 +191,8 @@ rho_0 = 1045.0
 nu_0  = 1.004e-6
 
 # Air
-rho_1 = 1025.0
-nu_1  = 1.004e-6
+rho_1 = rho_0#1025.0
+nu_1  = nu_0#1.004e-6
 
 # Surface tension
 sigma_01 = 0.0
