@@ -46,7 +46,7 @@ coefficients = RANS2P.Coefficients(epsFact=epsFact_viscosity,
                                    movingDomain=movingDomain)
 
 
-wind_Amp=0.1
+wind_Amp=0.5
 wavelength = L[0]#*2.0
 wave_num = 2.0*np.pi/wavelength
 wave_freq = np.sqrt(-g[1]*wave_num*np.tanh(wave_num*L[1]))
@@ -65,8 +65,8 @@ def getDBC_u(x,flag):
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
         return lambda x,t: wind_Amp*2*wave_freq*np.cosh(wave_num*L[1])/np.sinh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
         #return lambda x,t: wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.sin(2.0*np.pi*wind_omega/T*t)
-    if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
-        return lambda x,t: 0.0 #reynold's number of 10
+    #if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
+    #    return lambda x,t: 0.0 #reynold's number of 10
 
 
 def v_profile(x,t):
@@ -78,8 +78,8 @@ def getDBC_v(x,flag):
     if flag == boundaryTags['top']:
         return lambda x,t: v_profile(x,t)#wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.cos(2.0*np.pi*wind_omega/T*t)
     #if flag == boundaryTags['bottom']:# or x[1] >= l[1] - 1.0e-12:
-    if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
-        return lambda x,t: 0.0 #reynold's number of 10
+    #if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
+    #    return lambda x,t: 0.0 #reynold's number of 10
 
 dirichletConditions = {0:getDBC_p,
                        1:getDBC_u,
@@ -96,19 +96,23 @@ def getAFBC_p(x,flag):
         return lambda x,t: 0.0
 
 def getAFBC_u(x,flag):
-    if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    #if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    if flag not in [boundaryTags['top']]:
         return lambda x,t: 0.0
 
 def getAFBC_v(x,flag):
-    if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    #if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    if flag not in [boundaryTags['top']]:
         return lambda x,t: 0.0
 
 def getDFBC_u(x,flag):
-    if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    #if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    if flag not in [boundaryTags['top']]:
         return lambda x,t: 0.0
 
 def getDFBC_v(x,flag):
-    if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    #if flag not in [boundaryTags['top'],boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:
+    if flag not in [boundaryTags['top']]:
         return lambda x,t: 0.0
 
 advectiveFluxBoundaryConditions =  {0:getAFBC_p,
