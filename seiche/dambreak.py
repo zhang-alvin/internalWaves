@@ -13,6 +13,7 @@ applyRedistancing=True
 useOldPETSc=False
 useSuperlu=False#True
 timeDiscretization='be'#'vbdf'#'be','flcbdf'
+#timeDiscretization='vbdf'#'be','flcbdf'
 spaceOrder = 1
 useHex     = False
 useRBLES   = 0.0
@@ -39,7 +40,8 @@ if spaceOrder == 1:
     
 # Domain and mesh
 #L = (0.584,0.350)
-L = (2.0,0.5)
+L = (4.0,0.5)
+#L = (4.0,1.0)
 he = L[0]/float(4*Refinement-1)
 #he*=0.5
 #he*=0.5
@@ -188,10 +190,10 @@ elif useRANS == 2:
     ns_closure == 4
 # Water
 rho_0 = 1045.0
-nu_0  = 1.004e-6
+nu_0  = 1.0#1.004e-6
 
 # Air
-rho_1 = rho_0#1025.0
+rho_1 = 1025.0
 nu_1  = nu_0#1.004e-6
 
 # Surface tension
