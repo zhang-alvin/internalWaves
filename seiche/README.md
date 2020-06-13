@@ -6,10 +6,12 @@ The issue is in the event of mixing, the mixing might propagate up to the bounda
   
 For reference, how the pressure and velocity conditions vary with depth initially
 
-[comment]: <> https://alexanderrodin.com/github-latex-markdown/?math=%24p%3Dp_%7Ba%7D%2B%7B%5Crho_1%7DgA(H-y)%2B2%7B%5Crho_1%7Dg%5Cfrac%7Bcosh(%5Ckappa%20y)%7D%7Bcosh(%5Ckappa%20H)%7Dsin(%5Ckappa%20x)sin(%5Comega%20t)%24
+<!--[comment]: <> https://alexanderrodin.com/github-latex-markdown/?math=%24p%3Dp_%7Ba%7D%2B%7B%5Crho_1%7DgA(H-y)%2B2%7B%5Crho_1%7Dg%5Cfrac%7Bcosh(%5Ckappa%20y)%7D%7Bcosh(%5Ckappa%20H)%7Dsin(%5Ckappa%20x)sin(%5Comega%20t)%24
 [comment]: <> $p=p_{a}+{\rho_1}gA(H-y)+2{\rho_1}g\frac{cosh(\kappa y)}{cosh(\kappa H)}sin(\kappa x)sin(\omega t)$
 [comment]: <> $u=2\omega A \frac{cosh(\kappa y)}{sinh(\kappa H)}sin(\kappa x)sin(\omega t)$ 
 [comment]: <> $v=2\omega A \frac{sinh(\kappa y)}{sinh(\kappa H)}sin(\kappa x)cos(\omega t)$
+-->
+
 
 ![$p=p_{a}+{\rho_1}gA(H-y)+2{\rho_1}g\frac{cosh(\kappa y)}{cosh(\kappa H)}sin(\kappa x)sin(\omega t)$](https://render.githubusercontent.com/render/math?math=%24p%3Dp_%7Ba%7D%2B%7B%5Crho_1%7DgA(H-y)%2B2%7B%5Crho_1%7Dg%5Cfrac%7Bcosh(%5Ckappa%20y)%7D%7Bcosh(%5Ckappa%20H)%7Dsin(%5Ckappa%20x)sin(%5Comega%20t)%24)
 
