@@ -6,7 +6,7 @@ from proteus.Profiling import logEvent
    
 #  Discretization -- input options  
 #Refinement = 20#45min on a single core for spaceOrder=1, useHex=False
-Refinement = 40#45min on a single core for spaceOrder=1, useHex=False
+Refinement = 20#45min on a single core for spaceOrder=1, useHex=False
 genMesh=True
 movingDomain=False
 applyRedistancing=True
@@ -40,7 +40,8 @@ if spaceOrder == 1:
     
 # Domain and mesh
 #L = (0.584,0.350)
-L = (4.0,0.5)
+#L = (1.0,0.5)
+L = (1.0,0.5)
 #L = (4.0,1.0)
 he = L[0]/float(4*Refinement-1)
 #he*=0.5
@@ -111,7 +112,7 @@ else:
 
 #logEvent("""Mesh generated using: tetgen -%s %s"""  % (triangleOptions,domain.polyfile+".poly"))
 # Time stepping
-T=10.0
+T=30.0
 dt_fixed = 0.1
 dt_init = min(0.1*dt_fixed,0.1*he)
 runCFL=0.5
@@ -190,7 +191,7 @@ elif useRANS == 2:
     ns_closure == 4
 # Water
 rho_0 = 1045.0
-nu_0  = 1.0#1.004e-6
+nu_0  = 1.004e-6
 
 # Air
 rho_1 = 1025.0
@@ -205,11 +206,13 @@ g = [0.0,-9.8]
 
 # Initial condition
 waterLine_x = L[0]*2.0
-waterLine_z = L[1]/2.0#0.292
+#waterLine_z = L[1]/2.0#0.292
+def waterLine_z(x):
+    return L[1]/5+L[1]/2/L[0]*x[0]
 
 def signedDistance(x):
     phi_x = x[0]-waterLine_x
-    phi_z = x[1]-waterLine_z 
+    phi_z = x[1]-waterLine_z(x)
     if phi_x < 0.0:
         if phi_z < 0.0:
             return max(phi_x,phi_z)

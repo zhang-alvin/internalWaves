@@ -46,7 +46,7 @@ coefficients = RANS2P.Coefficients(epsFact=epsFact_viscosity,
                                    movingDomain=movingDomain)
 
 
-wind_Amp=0.5
+wind_Amp=0.0#0.5
 wavelength = L[0]#*2.0
 wave_num = 2.0*np.pi/wavelength
 wave_freq = np.sqrt(-g[1]*wave_num*np.tanh(wave_num*L[1]))
@@ -129,7 +129,7 @@ class PerturbedSurface_p:
     def uOfXT(self,x,t):
         if signedDistance(x) < 0:
             #return rho_1*gravity*(trueH-self.waterLevel)+rho_0*gravity*(self.waterLevel-x[1])+2*rho_0*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*self.waterLevel)*np.sin(wave_num*x[0])*np.sin(wave_num*t)
-            return rho_1*gravity*(trueH-self.waterLevel)+rho_0*gravity*(self.waterLevel-x[1])+2*rho_0*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
+            return rho_1*gravity*(trueH-self.waterLevel(x))+rho_0*gravity*(self.waterLevel(x)-x[1])+2*rho_0*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
         else:
             return rho_1*gravity*(trueH-x[1])+2*rho_1*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
 
