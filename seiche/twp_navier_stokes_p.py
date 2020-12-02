@@ -46,7 +46,7 @@ coefficients = RANS2P.Coefficients(epsFact=epsFact_viscosity,
                                    movingDomain=movingDomain)
 
 
-wind_Amp=0.5
+wind_Amp=0.0#0.5
 wavelength = L[0]#*2.0
 wave_num = 2.0*np.pi/wavelength
 wave_freq = np.sqrt(-g[1]*wave_num*np.tanh(wave_num*L[1]))
@@ -58,12 +58,12 @@ trueH = L[1]*2.0
 def getDBC_p(x,flag):
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
         #return lambda x,t: 0.0
-        return lambda x,t: rho_1*gravity*(trueH-L[1])+ 2*rho_1*(gravity)*wind_Amp*np.cosh(wave_num*L[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
+        return lambda x,t: 0.0#rho_1*gravity*(trueH-L[1])+ 2*rho_1*(gravity)*wind_Amp*np.cosh(wave_num*L[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
     
 def getDBC_u(x,flag):
     #return None
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
-        return lambda x,t: wind_Amp*2*wave_freq*np.cosh(wave_num*L[1])/np.sinh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
+        return lambda x,t: 0.0#wind_Amp*2*wave_freq*np.cosh(wave_num*L[1])/np.sinh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
         #return lambda x,t: wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.sin(2.0*np.pi*wind_omega/T*t)
     #if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
     #    return lambda x,t: 0.0 #reynold's number of 10
@@ -76,7 +76,7 @@ def v_profile(x,t):
 
 def getDBC_v(x,flag):
     if flag == boundaryTags['top']:
-        return lambda x,t: v_profile(x,t)#wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.cos(2.0*np.pi*wind_omega/T*t)
+        return lambda x,t: 0.0#v_profile(x,t)#wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.cos(2.0*np.pi*wind_omega/T*t)
     #if flag == boundaryTags['bottom']:# or x[1] >= l[1] - 1.0e-12:
     #if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
     #    return lambda x,t: 0.0 #reynold's number of 10
@@ -129,7 +129,7 @@ class PerturbedSurface_p:
     def uOfXT(self,x,t):
         if signedDistance(x) < 0:
             #return rho_1*gravity*(trueH-self.waterLevel)+rho_0*gravity*(self.waterLevel-x[1])+2*rho_0*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*self.waterLevel)*np.sin(wave_num*x[0])*np.sin(wave_num*t)
-            return rho_1*gravity*(trueH-self.waterLevel)+rho_0*gravity*(self.waterLevel-x[1])+2*rho_0*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
+            return rho_1*gravity*(trueH-self.waterLevel(x))+rho_0*gravity*(self.waterLevel(x)-x[1])+2*rho_0*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
         else:
             return rho_1*gravity*(trueH-x[1])+2*rho_1*(gravity)*wind_Amp*np.cosh(wave_num*x[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
 
