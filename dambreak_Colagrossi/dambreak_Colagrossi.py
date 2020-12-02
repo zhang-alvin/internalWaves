@@ -19,18 +19,18 @@ opts=Context.Options([
     ("water_level", 0.6, "Height of water column in m"),
     ("water_width", 1.2, "Width of  water column in m"),
     # tank
-    ("tank_dim", (3.22, 1.8), "Dimensions of the tank  in m"),
+    ("tank_dim", (1.0, 0.5), "Dimensions of the tank  in m"),
     #gravity 
     ("g",(0,-9.81,0), "Gravity vector in m/s^2"),
     # gauges
     ("gauge_output", True, "Produce gauge data"),
     ("gauge_location_p", (3.22, 0.12, 0), "Pressure gauge location in m"),
     # mesh refinement and timestep
-    ("refinement", 16 ,"Refinement level, he = L/(4*refinement - 1), where L is the horizontal dimension"), 
+    ("refinement", 32,"Refinement level, he = L/(4*refinement - 1), where L is the horizontal dimension"), 
     ("cfl", 0.33 ,"Target cfl"),
     # run time options
     ("T", 10.0 ,"Simulation time in s"),
-    ("dt_fixed", 0.01, "Fixed time step in s"),
+    ("dt_fixed", 0.5, "Fixed time step in s"),
     ("dt_init", 0.001 ,"Maximum initial time step in s"),
     ("useHex", False, "Use a hexahedral structured mesh"),
     ("structured", False, "Use a structured triangular mesh"),
@@ -271,10 +271,10 @@ H_fixed=tank_dim[1]/2.0;
 # water
 #waterLine_z = opts.water_level
 waterLine_x = tank_dim[0]*2#opts.water_width
-
+factor=3.0;
 
 def waterLine_z(x):
-    return H_fixed-H_fixed/5+H_fixed*2/5/tank_dim[0]*x[0]
+    return H_fixed-H_fixed/factor+H_fixed*2.0/factor/tank_dim[0]*x[0]
 
 def signedDistance(x):
     phi_x = x[0]-waterLine_x

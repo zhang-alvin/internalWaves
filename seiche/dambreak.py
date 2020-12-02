@@ -6,10 +6,10 @@ from proteus.Profiling import logEvent
    
 #  Discretization -- input options  
 #Refinement = 20#45min on a single core for spaceOrder=1, useHex=False
-Refinement = 20#45min on a single core for spaceOrder=1, useHex=False
+Refinement = 40#45min on a single core for spaceOrder=1, useHex=False
 genMesh=True
 movingDomain=False
-applyRedistancing=True
+applyRedistancing=False#True
 useOldPETSc=False
 useSuperlu=False#True
 timeDiscretization='be'#'vbdf'#'be','flcbdf'
@@ -18,9 +18,9 @@ spaceOrder = 1
 useHex     = False
 useRBLES   = 0.0
 useMetrics = 1.0
-applyCorrection=True
+applyCorrection=False#True
 useVF = 1.0
-useOnlyVF = False
+useOnlyVF = True#False
 useRANS = 0 # 0 -- None
             # 1 -- K-Epsilon
             # 2 -- K-Omega
@@ -119,7 +119,7 @@ runCFL=0.5
 nDTout = int(round(T/dt_fixed))
 
 # Numerical parameters
-ns_forceStrongDirichlet = False#True
+ns_forceStrongDirichlet = True
 if useMetrics:
     ns_shockCapturingFactor  = 0.25
     ns_lag_shockCapturing = True

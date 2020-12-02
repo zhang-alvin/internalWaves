@@ -58,12 +58,12 @@ trueH = L[1]*2.0
 def getDBC_p(x,flag):
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
         #return lambda x,t: 0.0
-        return lambda x,t: rho_1*gravity*(trueH-L[1])+ 2*rho_1*(gravity)*wind_Amp*np.cosh(wave_num*L[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
+        return lambda x,t: 0.0#rho_1*gravity*(trueH-L[1])+ 2*rho_1*(gravity)*wind_Amp*np.cosh(wave_num*L[1])/np.cosh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
     
 def getDBC_u(x,flag):
     #return None
     if flag == boundaryTags['top']:# or x[1] >= L[1] - 1.0e-12:
-        return lambda x,t: wind_Amp*2*wave_freq*np.cosh(wave_num*L[1])/np.sinh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
+        return lambda x,t: 0.0#wind_Amp*2*wave_freq*np.cosh(wave_num*L[1])/np.sinh(wave_num*trueH)*np.sin(wave_num*x[0])*np.sin(wave_freq*t)
         #return lambda x,t: wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.sin(2.0*np.pi*wind_omega/T*t)
     #if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
     #    return lambda x,t: 0.0 #reynold's number of 10
@@ -76,7 +76,7 @@ def v_profile(x,t):
 
 def getDBC_v(x,flag):
     if flag == boundaryTags['top']:
-        return lambda x,t: v_profile(x,t)#wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.cos(2.0*np.pi*wind_omega/T*t)
+        return lambda x,t: 0.0#v_profile(x,t)#wind_Amp*np.sin(np.pi*wind_N*x[0]/L[0])*np.cos(2.0*np.pi*wind_omega/T*t)
     #if flag == boundaryTags['bottom']:# or x[1] >= l[1] - 1.0e-12:
     #if flag in [boundaryTags['left'],boundaryTags['bottom'],boundaryTags['right']]:# or x[1] >= l[1] - 1.0e-12:
     #    return lambda x,t: 0.0 #reynold's number of 10
